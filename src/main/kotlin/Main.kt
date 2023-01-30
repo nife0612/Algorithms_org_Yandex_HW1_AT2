@@ -1,9 +1,8 @@
 import java.util.Scanner
+import kotlin.math.abs
 
 fun main() {
-
-    HW2_C_Nearest_number()
-
+    HW2_G_Greatest_product_of_two_numbers()
 }
 
 // Legend:
@@ -428,5 +427,86 @@ fun HW2_B_Determine_the_type_of_sequence(){
 }
 
 fun HW2_C_Nearest_number(){
+    val scanner = Scanner(System.`in`)
 
+    val n = scanner.nextInt()
+    val list = mutableListOf<Int>()
+    for (i in 0 until n)
+        list.add(scanner.nextInt())
+
+    val x = scanner.nextInt()
+
+    var tmp : Int = abs(x - list[0])
+    var ans : Int = list[0]
+
+    for (i in list)
+        if (abs(x - i) < tmp){
+            tmp = abs(x - i)
+            ans = i
+        }
+    print(ans)
+}
+
+fun HW2_D_More_of_the_neighbors(){
+    val scanner = Scanner(System.`in`).nextLine().split(" ")
+    val list = mutableListOf<Int>()
+    for (i in scanner)
+        list.add(i.toInt())
+
+    var ans = 0
+    for (i in 1 until list.size - 1)
+        if (list[i - 1] < list[i] && list[i] > list[i+1])
+            ans++
+
+    println(ans)
+}
+
+fun HW2_G_Greatest_product_of_two_numbers(){
+    var scanner = Scanner(System.`in`).nextLine()
+
+    scanner += " "
+
+    var first : Int = 0
+    var second : Int =  0
+    var negFirst : Int = 0
+    var negSecond : Int = 0
+
+    var cont = ""
+    var tmp : Int
+
+    for (i in 0 until scanner.length){
+
+        if(scanner[i] != ' '){
+            cont += scanner[i]
+            continue
+        }
+        else{
+            tmp = cont.toInt()
+            cont = ""
+        }
+
+        if(tmp > first){
+            second = first
+            first = tmp
+        }
+        else if(tmp > second){
+            second = tmp
+        }
+
+        if (tmp < negFirst){
+            negSecond = negFirst
+            negFirst = tmp
+        }
+        else if(tmp < negSecond){
+            negSecond = tmp
+        }
+
+    }
+
+    if(first * second > negFirst * negSecond){
+        print("$second $first")
+    }
+    else{
+        print("$negFirst $negSecond")
+    }
 }
